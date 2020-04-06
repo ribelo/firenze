@@ -3,5 +3,4 @@
          appliedscience/js-interop  {:mvn/version "0.2.4"}
          cljs-bean                  {:mvn/version "1.5.0"}
          datascript                 {:mvn/version "0.18.9"}
-         datascript-transit         {:mvn/version "0.3.0"}
-         re-posh                    {:mvn/version "0.3.1"}}}
+         datascript-transit         {:mvn/version "0.3.0"}}}
