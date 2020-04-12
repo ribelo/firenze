@@ -9,7 +9,7 @@
 
 (defn sync-path! [conn path]
   (rdb/off path)
-  (rdb/on :child-added path #(fd/firebase-on-child-added conn %))
+  (rdb/on :child-added   path #(fd/firebase-on-child-added conn %))
   (rdb/on :child-changed path #(fd/firebase-on-child-changed conn %))
   (rdb/on :child-removed path #(fd/firebase-on-child-removed conn %)))
 
