@@ -21,7 +21,7 @@
    (set path doc {}))
   ([path doc {:keys [on-success on-failure]}]
    (-> (ref path)
-       (j/call :set (dt/write-transit-str doc))
+       (j/call :set (->js doc))
        (cond-> on-success
          (j/call :then on-success))
        (cond-> on-failure
@@ -36,7 +36,7 @@
    (push path doc {}))
   ([path doc {:keys [on-success on-failure]}]
    (-> (ref path)
-       (j/call :push (dt/write-transit-str doc))
+       (j/call :push (->js doc))
        (cond-> on-success
          (j/call :then on-success))
        (cond-> on-failure
@@ -47,7 +47,7 @@
    (update path doc {}))
   ([path doc {:keys [on-success on-failure]}]
    (-> (ref path)
-       (j/call :update (dt/write-transit-str doc))
+       (j/call :update (->js doc))
        (cond-> on-success
          (j/call :then on-success))
        (cond-> on-failure
@@ -61,7 +61,7 @@
        (j/call :once "value" (fn [snap] (cb (persistent!
                                              (reduce-kv
                                               (fn [acc k v]
-                                                (assoc! acc k (dt/read-transit-str v)))
+                                                (assoc! acc k (->cljs v)))
                                               (transient {})
                                               (->clj (j/call snap :val)))))))
        (cond-> on-failure
@@ -70,7 +70,7 @@
 (defn- -on [event path cb {:keys [on-failure]}]
   (-> (ref path)
       (j/call :on event
-              (fn [snap & _] (cb (dt/read-transit-str (->clj (j/call snap :val))))))
+              (fn [snap & _] (cb (->cljs (->clj (j/call snap :val))))))
       (cond-> on-failure
         (j/call :catch #(on-failure %)))))
 
@@ -83,7 +83,7 @@
               (fn [snap] (cb (persistent!
                               (reduce-kv
                                (fn [acc k v]
-                                 (assoc! acc k (dt/read-transit-str v)))
+                                 (assoc! acc k (->cljs v)))
                                (transient {})
                                (->clj (j/call snap :val)))))))
       (cond-> on-failure
