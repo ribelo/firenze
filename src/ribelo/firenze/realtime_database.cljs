@@ -5,37 +5,16 @@
    ["firebase/database"]
    [applied-science.js-interop :as j]
    [cljs-bean.core :as bean :refer [->clj ->js]]
-   [clojure.string :as str]
-   [datascript.transit :as dt]))
-
-(defn- encode-key [k]
-  (-> k ->js (str/replace #"\." "_") (str/replace #"/" ":")))
-
-(defn- decode-key [s]
-  (-> s (str/replace #"_" ".") (str/replace #":" "/")))
+   [ribelo.firenze.utils :as u]))
 
 (defn database [] (j/call firebase :database))
 
 (defn server-timestamp []
   (j/get-in firebase [:database :ServerValue :TIMESTAMP]))
 
-(defmulti ->path (fn [x] (type x)))
-
-(defmethod ->path cljs.core/PersistentVector
-  [path]
-  (str/join "/" (mapv encode-key path)))
-
-(defmethod ->path cljs.core/Keyword
-  [path]
-  (encode-key path))
-
-(defmethod ->path js/String
-  [path]
-  path)
-
 (defn ref [path]
   (-> (database)
-      (j/call :ref (->path path))))
+      (j/call :ref (u/->path path))))
 
 (defn set
   ([path doc]
