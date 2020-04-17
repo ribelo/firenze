@@ -83,7 +83,7 @@
               (fn [snap] (cb (persistent!
                               (reduce-kv
                                (fn [acc k v]
-                                 (assoc! acc k (->cljs v)))
+                                 (assoc! acc k (->clj v)))
                                (transient {})
                                (->clj (j/call snap :val)))))))
       (cond-> on-failure
