@@ -58,12 +58,7 @@
    (once path cb {}))
   ([path cb {:keys [on-failure]}]
    (-> (ref path)
-       (j/call :once "value" (fn [snap] (cb (persistent!
-                                             (reduce-kv
-                                              (fn [acc k v]
-                                                (assoc! acc k (->clj v)))
-                                              (transient {})
-                                              (->clj (j/call snap :val)))))))
+       (j/call :once "value" (fn [snap] (cb (->clj (j/call snap :val)))))
        (cond-> on-failure
          (j/call :catch #(on-failure %))))))
 
@@ -80,12 +75,7 @@
   [event path cb {:keys [on-failure]}]
   (-> (ref path)
       (j/call :on "value"
-              (fn [snap] (cb (persistent!
-                              (reduce-kv
-                               (fn [acc k v]
-                                 (assoc! acc k (->clj v)))
-                               (transient {})
-                               (->clj (j/call snap :val)))))))
+              (fn [snap] (cb (->clj (j/call snap :val)))))
       (cond-> on-failure
         (j/call :catch #(on-failure %)))))
 
