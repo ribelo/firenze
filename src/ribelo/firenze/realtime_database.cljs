@@ -61,7 +61,7 @@
        (j/call :once "value" (fn [snap] (cb (persistent!
                                              (reduce-kv
                                               (fn [acc k v]
-                                                (assoc! acc k (->cljs v)))
+                                                (assoc! acc k (->clj v)))
                                               (transient {})
                                               (->clj (j/call snap :val)))))))
        (cond-> on-failure
@@ -70,7 +70,7 @@
 (defn- -on [event path cb {:keys [on-failure]}]
   (-> (ref path)
       (j/call :on event
-              (fn [snap & _] (cb (->cljs (->clj (j/call snap :val))))))
+              (fn [snap & _] (cb (->clj (j/call snap :val)))))
       (cond-> on-failure
         (j/call :catch #(on-failure %)))))
 
