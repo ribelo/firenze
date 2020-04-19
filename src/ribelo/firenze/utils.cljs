@@ -13,6 +13,6 @@
   [path]
   (munge (->js path)))
 
-(defmethod ->path js/String
+(defmethod ->path :default
   [path]
   (munge path))
