@@ -9,6 +9,10 @@
   [path]
   (str/join "/" (mapv ->path path)))
 
+(defmethod ->path cljs-bean.core/ArrayVector
+  [path]
+  (str/join "/" (mapv ->path path)))
+
 (defmethod ->path cljs.core/Keyword
   [path]
   (munge (->js path)))
