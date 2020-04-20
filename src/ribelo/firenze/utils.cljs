@@ -28,8 +28,8 @@
 
 (defmethod ->path cljs.core/Keyword
   [path]
-  (munge (->js path)))
+  (munge path))
 
 (defmethod ->path :default
   [path]
-  (munge path))
+  (clojure.core/munge path))
