@@ -17,8 +17,10 @@
    (-> (database)
        (j/call :ref)))
   ([path]
-   (-> (database)
-       (j/call :ref (u/->path path)))))
+   (if-not (empty? path)
+     (-> (database)
+         (j/call :ref (u/->path path)))
+     (ref))))
 
 (defn set
   ([path doc]
