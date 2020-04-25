@@ -8,8 +8,8 @@
 (defn munge [s]
   (-> s
       (->js)
-      (str/replace "." "_DOT_")
-      (clojure.core/munge)))
+      (clojure.core/munge)
+      (str/replace "." "_DOT_")))
 
 (defn demunge [s]
   (-> s
