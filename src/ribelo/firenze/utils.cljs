@@ -1,8 +1,9 @@
 (ns ribelo.firenze.utils
   (:refer-clojure :exclude [munge demunge])
   (:require
+   [cljs-bean.core :as bean :refer [->js]]
    [clojure.string :as str]
-   [cljs-bean.core :as bean :refer [->js]]))
+   [clojure.walk :refer [postwalk]]))
 
 (defn munge [s]
   (-> s
