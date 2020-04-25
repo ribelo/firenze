@@ -12,9 +12,13 @@
 (defn server-timestamp []
   (j/get-in firebase [:database :ServerValue :TIMESTAMP]))
 
-(defn ref [path]
-  (-> (database)
-      (j/call :ref (u/->path path))))
+(defn ref
+  ([]
+   (-> (database)
+       (j/call :ref)))
+  ([path]
+   (-> (database)
+       (j/call :ref (u/->path path)))))
 
 (defn set
   ([path doc]
