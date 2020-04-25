@@ -16,6 +16,10 @@
       (clojure.core/demunge)
       (keyword)))
 
+(defn munge-keys [m]
+    (let [f (fn [[k v]] [(munge k) v])]
+      (postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m)))
+
 (defmulti ->path (fn [path] (type path)))
 
 (defmethod ->path cljs.core/PersistentVector
