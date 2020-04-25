@@ -105,3 +105,14 @@
          (j/call :then on-success))
        (cond-> on-failure
          (j/call :catch #(on-failure %))))))
+
+(defn transact
+  ([path f]
+   (transact path f {}))
+  ([path f {:keys [on-success on-failure]}]
+   (-> (ref path)
+       (j/call :transaction f)
+       (cond-> on-success
+         (j/call :then on-success))
+       (cond-> on-failure
+         (j/call :catch #(on-failure %))))))
